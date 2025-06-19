@@ -2,8 +2,7 @@ import { useState } from 'react';
 import { keys } from '../data/notes';
 
 const blackKeyOffsets = {
-  'C#4': 0.65, 'D#4': 1.65, 'F#4': 3.65, 'G#4': 4.65, 'A#4': 5.65,
-  'C#5': 7.65, 'D#5': 8.65, 'F#5': 10.65, 'G#5': 11.65, 'A#5': 12.65,
+  'C#5': 0.65, 'D#5': 1.65, 'F#5': 3.65, 'G#5': 4.65, 'A#5': 5.65
 };
 
 export default function PianoKey({ note, offset, index, playNote }) {
@@ -12,13 +11,13 @@ export default function PianoKey({ note, offset, index, playNote }) {
   const [hovered, setHovered] = useState(false);
 
   const left = isBlack
-    ? `${blackKeyOffsets[note] * 60}px`
-    : `${(index - blackKeyCountBefore(index)) * 60}px`;
+    ? `${blackKeyOffsets[note] * 50}px`
+    : `${(index - blackKeyCountBefore(index)) * 50}px`;
 
   const style = {
     position: 'absolute',
     left,
-    width: isBlack ? '40px' : '60px',
+    width: isBlack ? '33.35px' : '50px',
     height: isBlack ? '160px' : '260px',
     backgroundColor: isBlack ? '#000' : '#fff',
     color: isBlack ? '#fff' : '#000',
