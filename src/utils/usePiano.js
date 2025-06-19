@@ -1,36 +1,31 @@
-import { useEffect, useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
-export function usePiano() {
-  const audioContextRef = useRef(null);
-  const audioBufferRef = useRef(null);
+export function usePiano(sustain = false, volume = 1, transpose = 0) {
+  const audioCtxRef = useRef(null);
 
   useEffect(() => {
-    const init = async () => {
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      const audioContext = new AudioContext();
-      audioContextRef.current = audioContext;
-
-      try {
-        const response = await fetch(`${import.meta.env.BASE_URL}sounds/C.mp3`);
-        const arrayBuffer = await response.arrayBuffer();
-        const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        audioBufferRef.current = audioBuffer;
-      } catch (error) {
-        console.error('Failed to load audio:', error);
-      }
-    };
-
-    init();
+    audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
   }, []);
 
-  const playNote = (semitoneOffset) => {
-    if (!audioContextRef.current || !audioBufferRef.current) return;
+  const playNote = (offset) => {
+    const context = audioCtxRef.current;
+    const source = context.createBufferSource();
+    const gainNode = context.createGain();
+    gainNode.gain.value = volume;
 
-    const source = audioContextRef.current.createBufferSource();
-    source.buffer = audioBufferRef.current;
-    source.playbackRate.value = Math.pow(2, semitoneOffset / 12);
-    source.connect(audioContextRef.current.destination);
-    source.start();
+    const file = sustain ? '/piano-app/sounds/C_sustained.mp3' : '/piano-app/sounds/C.mp3';
+
+    fetch(file)
+      .then(res => res.arrayBuffer())
+      .then(arrayBuffer => context.decodeAudioData(arrayBuffer))
+      .then(audioBuffer => {
+        source.buffer = audioBuffer;
+        const finalOffset = offset + transpose;
+        source.playbackRate.value = Math.pow(2, finalOffset / 12);
+        source.connect(gainNode);
+        gainNode.connect(context.destination);
+        source.start(0);
+      });
   };
 
   return { playNote };

@@ -54,10 +54,12 @@ export default function PianoKey({ note, offset, index, playNote, isPressed, lab
       onMouseLeave={() => setHovered(false)}
       style={style}
     >
+    {label && (
       <div className="note-label">
         <div>{note}</div>
-        {label && <div className="key-label">({label})</div>}
+        <div className="key-label">{label}</div>
       </div>
+    )}
     </button>
   );
 }

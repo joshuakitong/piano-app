@@ -1,14 +1,21 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { keys } from './data/notes';
 import { keyToNote } from './data/keyMap';
 import PianoKey from './components/PianoKey';
+import ControlPanel from './components/ControlPanel';
 import { usePiano } from './utils/usePiano';
+import { transposeNote } from './utils/transposeNote';
 import './piano.css';
 
 function App() {
-  const { playNote } = usePiano();
-  const activeKeys = useRef(new Set());
+  const [sustain, setSustain] = useState(false);
+  const [showLabels, setShowLabels] = useState(true);
+  const [volume, setVolume] = useState(1);
   const [pressedNotes, setPressedNotes] = useState([]);
+  const [transpose, setTranspose] = useState(0);
+
+  const { playNote } = usePiano(sustain, volume, transpose);
+  const activeKeys = useRef(new Set());
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -20,7 +27,7 @@ function App() {
       if (noteObj) {
         playNote(noteObj.offset);
         activeKeys.current.add(key);
-        setPressedNotes((prev) => [...prev, note]);
+        setPressedNotes(prev => [...prev, note]);
       }
     };
 
@@ -28,12 +35,11 @@ function App() {
       const key = e.key.toLowerCase();
       const note = keyToNote[key];
       activeKeys.current.delete(key);
-      setPressedNotes((prev) => prev.filter(n => n !== note));
+      setPressedNotes(prev => prev.filter(n => n !== note));
     };
 
     window.addEventListener('keydown', handleKeyDown);
     window.addEventListener('keyup', handleKeyUp);
-
     return () => {
       window.removeEventListener('keydown', handleKeyDown);
       window.removeEventListener('keyup', handleKeyUp);
@@ -42,16 +48,29 @@ function App() {
 
   return (
     <div className="app">
-      <h1>React Piano</h1>
+      <h1>Piano</h1>
+
+      <ControlPanel
+        sustain={sustain}
+        showLabels={showLabels}
+        volume={volume}
+        transpose={transpose}
+        onToggleSustain={() => setSustain(prev => !prev)}
+        onToggleLabels={() => setShowLabels(prev => !prev)}
+        onVolumeChange={setVolume}
+        onTranspose={(val) => setTranspose(val)}
+      />
+
       <div className="piano">
         {keys.map((key, index) => (
           <PianoKey
-            note={key.note}
-            {...key}
+            key={key.note}
+            note={transposeNote(key.note, transpose)} // ✅ updated label
+            offset={key.offset}
             index={index}
             playNote={playNote}
             isPressed={pressedNotes.includes(key.note)}
-            label={noteToKey[key.note]}
+            label={showLabels ? noteToKey[key.note] : null}
           />
         ))}
       </div>

@@ -45,3 +45,21 @@ button {
     display: none;
   }
 }
+
+.control-panel {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+
+.control-panel label {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.control-panel input[type="range"] {
+  width: 100px;
+}
