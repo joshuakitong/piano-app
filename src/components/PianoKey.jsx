@@ -5,7 +5,7 @@ const blackKeyOffsets = {
   'C#5': 0.65, 'D#5': 1.65, 'F#5': 3.65, 'G#5': 4.65, 'A#5': 5.65
 };
 
-export default function PianoKey({ note, offset, index, playNote }) {
+export default function PianoKey({ note, offset, index, playNote, isPressed, label }) {
   const isBlack = note.includes('#');
   const [pressed, setPressed] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -24,8 +24,8 @@ export default function PianoKey({ note, offset, index, playNote }) {
     zIndex: isBlack ? 2 : 1,
     border: '1px solid #333',
     transition: 'all 0.1s ease',
-    transform: pressed ? 'scale(0.98)' : 'scale(1)',
-    boxShadow: pressed
+    transform: isPressed || pressed ? 'scale(0.98)' : 'scale(1)',
+    boxShadow: isPressed || pressed
       ? isBlack
         ? '0 0 10px #fff5'
         : 'inset 0 0 10px #0004'
@@ -54,7 +54,10 @@ export default function PianoKey({ note, offset, index, playNote }) {
       onMouseLeave={() => setHovered(false)}
       style={style}
     >
-      <span>{note}</span>
+      <div className="note-label">
+        <div>{note}</div>
+        {label && <div className="key-label">({label})</div>}
+      </div>
     </button>
   );
 }

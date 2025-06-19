@@ -1,0 +1,15 @@
+export const keyToNote = {
+  a: 'C5',
+  w: 'C#5',
+  s: 'D5',
+  e: 'D#5',
+  d: 'E5',
+  f: 'F5',
+  t: 'F#5',
+  g: 'G5',
+  y: 'G#5',
+  h: 'A5',
+  u: 'A#5',
+  j: 'B5',
+  k: 'C6',
+};
