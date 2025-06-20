@@ -21,7 +21,7 @@ export default function ControlPanel({
             </label>
         </div>
         <div>
-            <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <label className="volume">
                 Volume
                 <input
                 type="range"
@@ -32,7 +32,7 @@ export default function ControlPanel({
                 onChange={(e) => onVolumeChange(parseFloat(e.target.value))}
                 />
             </label>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div className="transpose">
                 Transpose:
                 <button onClick={() => onTranspose(-12)} disabled={transpose === -12}>-12</button>
                 <button onClick={() => onTranspose(0)} disabled={transpose === 0}>0</button>

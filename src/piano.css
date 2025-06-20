@@ -64,8 +64,21 @@ button {
   width: 100px;
 }
 
+.volume {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.transpose {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 .song-selector select {
   margin-left: 0.5rem;
+  margin-top: 1rem;
   padding: 0.25rem;
   font-size: 1rem;
 }
