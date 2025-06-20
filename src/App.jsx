@@ -4,6 +4,7 @@ import { keyToNote } from './data/keyMap';
 import { songs } from './data/songs';
 import PianoKey from './components/PianoKey';
 import ControlPanel from './components/ControlPanel';
+import MusicSheet from './components/MusicSheet';
 import { usePiano } from './utils/usePiano';
 import { transposeNote } from './utils/transposeNote';
 import './piano.css';
@@ -68,7 +69,7 @@ function App() {
         {keys.map((key, index) => (
           <PianoKey
             key={key.note}
-            note={transposeNote(key.note, transpose)} // ✅ updated label
+            note={transposeNote(key.note, transpose)}
             offset={key.offset}
             index={index}
             playNote={playNote}
@@ -78,46 +79,10 @@ function App() {
         ))}
       </div>
 
-      <div className="song-selector" style={{ margin: '1rem 0' }}>
-        <label>
-          Choose a song:
-          <select value={selectedSong} onChange={(e) => setSelectedSong(e.target.value)}>
-            <option value="">-- Select --</option>
-            {Object.keys(songs).map((title) => (
-              <option key={title} value={title}>{title}</option>
-            ))}
-          </select>
-        </label>
-      </div>
-
-      {(() => {
-        const lines = [];
-        let currentLine = [];
-
-        currentSheet.forEach((note, i) => {
-          if (note === '\n') {
-            lines.push(currentLine);
-            currentLine = [];
-          } else {
-            currentLine.push(note);
-          }
-        });
-
-        if (currentLine.length) lines.push(currentLine); // push last line
-
-        return (
-          <div className="song-sheet">
-            <div className="song-title"><strong>{selectedSong}</strong></div>
-            {lines.map((line, lineIndex) => (
-              <div key={lineIndex} className="notes-line">
-                {line.map((note, i) => (
-                  <span key={i} className="notes">{note}</span>
-                ))}
-              </div>
-            ))}
-          </div>
-        );
-      })()}
+      <MusicSheet 
+        sheet={currentSheet} 
+        title={selectedSong} 
+      />
     </div>
   );
 }
