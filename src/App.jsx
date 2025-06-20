@@ -10,9 +10,9 @@ import { transposeNote } from './utils/transposeNote';
 import './piano.css';
 
 function App() {
-  const [sustain, setSustain] = useState(false);
+  const [sustain, setSustain] = useState(true);
   const [showLabels, setShowLabels] = useState(true);
-  const [volume, setVolume] = useState(1);
+  const [volume, setVolume] = useState(0.7);
   const [pressedNotes, setPressedNotes] = useState([]);
   const [transpose, setTranspose] = useState(0);
   const [selectedSong, setSelectedSong] = useState('');
