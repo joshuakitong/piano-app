@@ -9,7 +9,7 @@ export default function ControlPanel({
   onTranspose
 }) {
   return (
-    <div className="control-panel">
+    <>
         <div>
             <label>
                 <input type="checkbox" checked={sustain} onChange={onToggleSustain} />
@@ -39,6 +39,6 @@ export default function ControlPanel({
                 <button onClick={() => onTranspose(12)} disabled={transpose === 12}>+12</button>
             </div>
         </div>
-    </div>
+    </>
   );
 }

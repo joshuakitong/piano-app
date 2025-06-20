@@ -52,18 +52,20 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Piano</h1>
+      <h2 className="header">Simple Piano</h2>
 
-      <ControlPanel
-        sustain={sustain}
-        showLabels={showLabels}
-        volume={volume}
-        transpose={transpose}
-        onToggleSustain={() => setSustain(prev => !prev)}
-        onToggleLabels={() => setShowLabels(prev => !prev)}
-        onVolumeChange={setVolume}
-        onTranspose={(val) => setTranspose(val)}
-      />
+      <div className="control-panel">
+        <ControlPanel
+          sustain={sustain}
+          showLabels={showLabels}
+          volume={volume}
+          transpose={transpose}
+          onToggleSustain={() => setSustain(prev => !prev)}
+          onToggleLabels={() => setShowLabels(prev => !prev)}
+          onVolumeChange={setVolume}
+          onTranspose={(val) => setTranspose(val)}
+        />
+      </div>
 
       <div className="piano">
         {keys.map((key, index) => (

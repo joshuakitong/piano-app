@@ -11,6 +11,11 @@ body {
   align-items: center;
 }
 
+.header {
+  font-family:'Segoe UI';
+  margin: 1rem;
+}
+
 .piano {
   position: relative;
   width: 400px;
@@ -61,7 +66,8 @@ button {
 }
 
 .control-panel input[type="range"] {
-  width: 100px;
+  width: 140px;
+  cursor: pointer;
 }
 
 .volume {
