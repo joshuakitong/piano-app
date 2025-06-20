@@ -79,6 +79,18 @@ function App() {
         ))}
       </div>
 
+      <div className="song-selector">
+        <label>
+          Choose a song:
+          <select value={selectedSong} onChange={(e) => setSelectedSong(e.target.value)}>
+            <option value="">-- Select --</option>
+            {Object.keys(songs).map((title) => (
+              <option key={title} value={title}>{title}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
       <MusicSheet 
         sheet={currentSheet} 
         title={selectedSong} 
