@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { keys } from './data/notes';
 import { keyToNote } from './data/keyMap';
+import { songs } from './data/songs';
 import PianoKey from './components/PianoKey';
 import ControlPanel from './components/ControlPanel';
 import { usePiano } from './utils/usePiano';
@@ -13,7 +14,9 @@ function App() {
   const [volume, setVolume] = useState(1);
   const [pressedNotes, setPressedNotes] = useState([]);
   const [transpose, setTranspose] = useState(0);
+  const [selectedSong, setSelectedSong] = useState('');
 
+  const currentSheet = songs[selectedSong] || [];
   const { playNote } = usePiano(sustain, volume, transpose);
   const activeKeys = useRef(new Set());
 
@@ -74,6 +77,47 @@ function App() {
           />
         ))}
       </div>
+
+      <div className="song-selector" style={{ margin: '1rem 0' }}>
+        <label>
+          Choose a song:
+          <select value={selectedSong} onChange={(e) => setSelectedSong(e.target.value)}>
+            <option value="">-- Select --</option>
+            {Object.keys(songs).map((title) => (
+              <option key={title} value={title}>{title}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      {(() => {
+        const lines = [];
+        let currentLine = [];
+
+        currentSheet.forEach((note, i) => {
+          if (note === '\n') {
+            lines.push(currentLine);
+            currentLine = [];
+          } else {
+            currentLine.push(note);
+          }
+        });
+
+        if (currentLine.length) lines.push(currentLine); // push last line
+
+        return (
+          <div className="song-sheet">
+            <div className="song-title"><strong>{selectedSong}</strong></div>
+            {lines.map((line, lineIndex) => (
+              <div key={lineIndex} className="notes-line">
+                {line.map((note, i) => (
+                  <span key={i} className="notes">{note}</span>
+                ))}
+              </div>
+            ))}
+          </div>
+        );
+      })()}
     </div>
   );
 }
