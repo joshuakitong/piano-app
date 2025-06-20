@@ -1,7 +1,7 @@
 body {
   margin: 0;
-  font-family: sans-serif;
-  background: #ececec;
+  font-family: 'Segoe UI';
+  background: #fff;
 }
 
 .app {
@@ -9,11 +9,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 460px;
+  margin: 2rem auto;
+  border: 2px solid #ddd;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #eee;
 }
 
 .header {
-  font-family:'Segoe UI';
-  margin: 1rem;
+  margin-top: 0;
 }
 
 .piano {
